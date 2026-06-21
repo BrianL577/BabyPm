@@ -57,8 +57,12 @@ export const DEFAULT_REPORT_NOTES = `Quick notes for this week on the Sample Cou
 
 export const DEFAULT_EMAIL_DRAFT = `hi sarah, just letting you know the vendor still hasnt given us the test environment access they promised two weeks ago. this is starting to put dry run 3 at risk. can you please chase them today, we really need this sorted by friday. thanks, alex`;
 
-export const DEFAULT_TENDER_REQUIREMENTS = `1. Vendor must explain how MPP data will be accessed, interpreted and compared across reporting periods.
-2. Generated reports must include source references or clear traceability to source inputs where feasible.
-3. Search results and responses should be returned within a target of 30 seconds for common queries.
-4. Vendor must state where files, prompts, responses, embeddings and indexes are stored.
-5. Vendor must demonstrate similar experience with Microsoft 365, AI assistants, RAG, and secure document handling.`;
+// This is a FICTIONAL sample client RFP excerpt — illustrative only, not a real
+// document. It exists so this demo shows babyPM's actual intended use: CWW
+// responding to one of ITS OWN clients' tenders. (It is deliberately not the
+// CWW babyPM RFP itself, which is a different document CWW issued to vendors.)
+export const DEFAULT_TENDER_REQUIREMENTS = `1. Vendor must demonstrate prior experience delivering project or program advisory services to local government or healthcare clients.
+2. Vendor must describe their approach to governance and status reporting, including any delivery-confidence (RAG) rating method.
+3. Vendor must demonstrate test management capability across system integration testing, user acceptance testing and cutover rehearsal.
+4. Vendor must provide at least one relevant case study, including outcomes achieved.
+5. Vendor must describe their approach to data migration readiness and cutover planning.`;
