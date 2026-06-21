@@ -275,8 +275,8 @@ function TenderPanel() {
     <Card>
       <h3 className="font-display text-xl">Tender Compliance Matrix</h3>
       <p className="mt-1 text-sm text-ink-soft">
-        Default text below is pulled from the actual CWW babyPM RFP — this panel is, literally,
-        babyPM analysing its own RFP.
+        Simulates a future CWW <em>client</em> (a council, a health provider) sending CWW a
+        tender. The sample below is a fictional client RFP excerpt — not the babyPM RFP itself.
       </p>
       <textarea
         value={requirements}
@@ -325,87 +325,6 @@ function TenderPanel() {
   );
 }
 
-function LeadForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [company, setCompany] = useState("");
-  const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const [error, setError] = useState<string | null>(null);
-
-  const submit = async () => {
-    setStatus("sending");
-    setError(null);
-    try {
-      const res = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name, email, company, message }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Something went wrong.");
-      setStatus("sent");
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong.");
-      setStatus("error");
-    }
-  };
-
-  if (status === "sent") {
-    return (
-      <Card>
-        <div className="flex items-center gap-2">
-          <StatusChip status="green" label="RECEIVED" />
-          <p className="text-sm">Thanks — that's logged. We'll follow up.</p>
-        </div>
-      </Card>
-    );
-  }
-
-  return (
-    <Card>
-      <h3 className="font-display text-xl">Want the full architecture proposal?</h3>
-      <p className="mt-1 text-sm text-ink-soft">
-        This page is a concept prototype. Leave your details and we&rsquo;ll send the
-        Azure-aligned production architecture and full vendor response.
-      </p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="rounded border border-line bg-paper px-3 py-2 text-sm"
-        />
-        <input
-          placeholder="Email *"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="rounded border border-line bg-paper px-3 py-2 text-sm"
-        />
-        <input
-          placeholder="Organisation"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-          className="rounded border border-line bg-paper px-3 py-2 text-sm sm:col-span-2"
-        />
-        <textarea
-          placeholder="Anything specific you'd like covered?"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          rows={2}
-          className="rounded border border-line bg-paper px-3 py-2 text-sm sm:col-span-2"
-        />
-      </div>
-      <div className="mt-3">
-        <PrimaryButton onClick={submit} disabled={status === "sending" || !email}>
-          {status === "sending" ? "Sending…" : "Request the proposal"}
-        </PrimaryButton>
-      </div>
-      {error && <ErrorNote message={error} />}
-    </Card>
-  );
-}
-
 export default function Home() {
   const [tab, setTab] = useState<Mode>("knowledge");
 
@@ -419,8 +338,11 @@ export default function Home() {
           babyPM
         </h1>
         <p className="mt-3 max-w-xl text-ink-soft">
-          An interactive concept prototype of the four highest-value babyPM workflows from the
-          RFP — built to show the experience, not the production system.
+          babyPM is an <strong>internal</strong> assistant for CWW&rsquo;s own staff — not a
+          public-facing site, and not a government database. It works only against CWW&rsquo;s
+          own knowledge library (reports, case studies, templates), with a human always
+          reviewing before anything goes external. This page demonstrates four of its required
+          workflows.
         </p>
 
         <div className="mt-5 flex items-start gap-3 rounded-lg border border-rag-amber bg-rag-amber-bg p-4">
@@ -455,10 +377,6 @@ export default function Home() {
         {tab === "report" && <ReportPanel />}
         {tab === "email" && <EmailPanel />}
         {tab === "tender" && <TenderPanel />}
-      </div>
-
-      <div className="mt-8">
-        <LeadForm />
       </div>
 
       <footer className="mt-14 border-t border-line pt-6 text-sm text-ink-soft">
